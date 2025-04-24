@@ -24,15 +24,9 @@
     --input: 240 5.9% 90%;
     --ring: 267 76% 60%;
     --radius: 0.75rem;
-
-    --sidebar-background: 240 10% 3.9%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 267 76% 60%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 267 76% 95%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 267 76% 60%;
+    --museum-dark: 240 17% 17%;
+    --museum-purple: 267 76% 70%;
+    --museum-light: 267 76% 95%;
   }
 
   .dark {
@@ -64,6 +58,12 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Шрифты */
+  h1, h2, h3, h4, .font-serif {
+    font-family: "Playfair Display", serif;
   }
 
   /* Стили для элементов музейной тематики */
@@ -80,7 +80,10 @@
   }
   
   .hero-text {
-    @apply max-w-3xl text-5xl font-serif font-bold leading-tight md:text-6xl;
+    @apply text-5xl font-serif font-bold leading-tight md:text-7xl;
+    background: linear-gradient(90deg, #fff 60%, hsl(var(--museum-purple)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .section-title {
@@ -95,6 +98,23 @@
   .fade-up {
     @apply animate-fade-in;
   }
+
+  /* Новые стили */
+  .museum-card {
+    @apply rounded-xl border border-border/40 bg-card p-6 shadow-sm hover:shadow-md transition-all duration-300;
+  }
+
+  .museum-badge {
+    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .image-hover-zoom {
+    @apply transition-transform duration-500 hover:scale-110;
+  }
+
+  .gradient-mask {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
 }
 
 @keyframes fadeUp {
@@ -108,9 +128,35 @@
   }
 }
 
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.5s ease forwards;
+}
+
+/* Задержки для анимаций */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
 @font-face {
   font-family: 'Playfair Display';
   font-style: normal;
   font-weight: 400;
-  src: url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+  src: url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 }

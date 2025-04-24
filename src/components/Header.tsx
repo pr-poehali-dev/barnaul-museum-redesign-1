@@ -21,14 +21,17 @@ export const Header = () => {
 
   return (
     <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled ? "bg-background/95 backdrop-blur-sm shadow-sm" : "bg-transparent"}`}>
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-20 items-center justify-between">
         <div className="flex items-center gap-4">
           <a href="/" className="flex items-center gap-2">
-            <img src="/logo-b.svg" alt="ГХМАК" className="h-8 w-auto" />
-            <span className="text-lg font-serif font-semibold hidden md:inline-block">ГХМАК</span>
+            <img src="/logo-b.svg" alt="ГХМАК" className="h-10 w-auto" />
+            <div className="flex flex-col">
+              <span className="text-xl font-serif font-semibold hidden md:inline-block">ГХМАК</span>
+              <span className="text-xs text-muted-foreground hidden md:inline-block">Государственный художественный музей Алтайского края</span>
+            </div>
           </a>
           
-          <NavigationMenu className="hidden md:flex">
+          <NavigationMenu className="hidden md:flex ml-8">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="font-medium">О музее</NavigationMenuTrigger>
@@ -137,7 +140,7 @@ export const Header = () => {
           <Button variant="outline" size="sm" className="hidden md:flex">
             Виртуальный тур
           </Button>
-          <Button size="sm" className="hidden md:flex">Купить билет</Button>
+          <Button size="sm" className="hidden md:flex bg-primary hover:bg-primary/90">Купить билет</Button>
           
           <Sheet>
             <SheetTrigger asChild>

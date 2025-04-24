@@ -1,6 +1,6 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 interface ExhibitionCardProps {
@@ -19,29 +19,27 @@ export const ExhibitionCard = ({
   featured = false,
 }: ExhibitionCardProps) => {
   return (
-    <Card className={`overflow-hidden border-0 shadow-md exhibit-card ${featured ? 'ring-2 ring-primary' : ''}`}>
-      <div className="relative h-52 overflow-hidden">
+    <Card className={`overflow-hidden border-0 rounded-xl shadow-md ${featured ? 'ring-2 ring-primary/20' : ''}`}>
+      <div className="relative overflow-hidden aspect-[4/3]">
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
         />
         {featured && (
-          <Badge className="absolute top-3 right-3 bg-primary hover:bg-primary/90">
-            Особая выставка
+          <Badge className="absolute top-4 right-4 bg-primary text-white">
+            Рекомендуем
           </Badge>
         )}
       </div>
-      <CardHeader className="pb-2">
+      <CardContent className="pt-5">
         <div className="exhibit-date">{dates}</div>
-        <CardTitle className="exhibit-title">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <CardDescription className="text-foreground/80">{description}</CardDescription>
+        <h3 className="exhibit-title mt-2 mb-3">{title}</h3>
+        <p className="text-muted-foreground line-clamp-3">{description}</p>
       </CardContent>
-      <CardFooter>
-        <Button variant="outline" className="w-full group">
-          <span>Подробнее</span>
+      <CardFooter className="pt-0 pb-5">
+        <Button variant="link" className="p-0 h-auto text-primary group">
+          Подробнее
           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Button>
       </CardFooter>

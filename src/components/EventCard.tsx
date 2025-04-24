@@ -1,7 +1,6 @@
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CalendarDays, Clock } from "lucide-react";
+import { CalendarClock } from "lucide-react";
 
 interface EventCardProps {
   title: string;
@@ -10,47 +9,53 @@ interface EventCardProps {
   type: string;
 }
 
-export const EventCard = ({ title, date, image, type }: EventCardProps) => {
-  // Разделяем дату и время
-  const [dateStr, timeStr] = date.split(', ');
+export const EventCard = ({
+  title,
+  date,
+  image,
+  type,
+}: EventCardProps) => {
+  // Определяем цвет бейджа в зависимости от типа события
+  const getBadgeColor = (eventType: string) => {
+    switch (eventType.toLowerCase()) {
+      case "лекция":
+        return "bg-blue-100 text-blue-800 hover:bg-blue-200";
+      case "мастер-класс":
+        return "bg-orange-100 text-orange-800 hover:bg-orange-200";
+      case "экскурсия":
+        return "bg-green-100 text-green-800 hover:bg-green-200";
+      default:
+        return "bg-primary/10 text-primary hover:bg-primary/20";
+    }
+  };
 
   return (
-    <Card className="overflow-hidden border-0 shadow-md hover:shadow-lg transition-all duration-300">
-      <div className="relative h-48 overflow-hidden bg-muted">
+    <Card className="overflow-hidden rounded-xl border-0 shadow-sm hover:shadow-md transition-all duration-300 h-full">
+      <div className="h-48 relative overflow-hidden">
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
         />
-        <Badge
-          variant="secondary"
-          className="absolute top-3 left-3 font-medium bg-background/80 backdrop-blur-sm text-foreground"
-        >
+        <Badge className={`absolute top-3 right-3 ${getBadgeColor(type)}`}>
           {type}
         </Badge>
       </div>
-      <CardHeader className="pb-0">
-        <h3 className="text-xl font-bold tracking-tight">{title}</h3>
-      </CardHeader>
-      <CardContent className="pb-2 pt-1">
-        <div className="flex flex-col gap-1 text-sm">
-          <div className="flex items-center text-muted-foreground">
-            <CalendarDays className="mr-2 h-4 w-4" />
-            <span>{dateStr}</span>
-          </div>
-          {timeStr && (
-            <div className="flex items-center text-muted-foreground">
-              <Clock className="mr-2 h-4 w-4" />
-              <span>{timeStr}</span>
-            </div>
-          )}
+      <CardContent className="p-5">
+        <div className="flex items-center gap-2 text-muted-foreground mb-3">
+          <CalendarClock className="h-4 w-4" />
+          <span className="text-sm">{date}</span>
+        </div>
+        <h3 className="text-xl font-medium leading-tight line-clamp-2 mb-2">{title}</h3>
+        <div className="mt-3">
+          <a 
+            href="#" 
+            className="text-primary text-sm font-medium inline-flex items-center hover:underline"
+          >
+            Забронировать место
+          </a>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button size="sm" variant="outline" className="w-full">
-          Забронировать место
-        </Button>
-      </CardFooter>
     </Card>
   );
 };

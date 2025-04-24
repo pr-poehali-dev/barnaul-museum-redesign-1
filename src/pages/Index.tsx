@@ -7,7 +7,7 @@ import { EventCard } from "@/components/EventCard";
 import { Footer } from "@/components/Footer";
 import { BookTicketButton } from "@/components/BookTicketButton";
 import { MuseumInfo } from "@/components/MuseumInfo";
-import { CalendarHeart, Ticket, MapPin, Clock, Phone, ChevronRight, ArrowRight } from "lucide-react";
+import { CalendarHeart, Ticket, MapPin, Clock, Phone, ChevronRight, ArrowRight, Palette, BookOpen, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index = () => {
@@ -16,14 +16,14 @@ const Index = () => {
       <Header />
       
       {/* Hero section */}
-      <section className="relative h-[80vh] flex items-center overflow-hidden bg-museum-dark">
+      <section className="relative h-[90vh] flex items-center overflow-hidden bg-museum-dark">
         <div className="absolute inset-0 z-0">
           <img 
             src="/placeholder.svg" 
             alt="Государственный художественный музей Алтайского края" 
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-cover opacity-40"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-museum-dark/90 to-museum-dark/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-museum-dark to-museum-dark/40"></div>
         </div>
         <div className="container relative z-10 text-white">
           <div className="max-w-3xl fade-up">
@@ -42,28 +42,54 @@ const Index = () => {
             </div>
           </div>
         </div>
+        
+        {/* Stats panel */}
+        <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm">
+          <div className="container py-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
+              <div className="flex flex-col items-center md:items-start">
+                <div className="text-3xl font-bold mb-1">10,000+</div>
+                <div className="text-white/70 text-sm">Экспонатов в коллекции</div>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="text-3xl font-bold mb-1">50+</div>
+                <div className="text-white/70 text-sm">Выставок в год</div>
+              </div>
+              <div className="flex flex-col items-center md:items-end">
+                <div className="text-3xl font-bold mb-1">1958</div>
+                <div className="text-white/70 text-sm">Год основания музея</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Quick info panel */}
       <section className="bg-accent py-5 relative z-10 border-b">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="flex items-center justify-center md:justify-start gap-3">
-              <Clock className="text-primary h-5 w-5" />
+            <div className="flex items-center justify-center md:justify-start gap-4">
+              <div className="bg-white p-3 rounded-full shadow-sm">
+                <Clock className="text-primary h-5 w-5" />
+              </div>
               <div>
                 <p className="text-sm font-medium">Время работы</p>
                 <p className="text-sm text-muted-foreground">Вт-Вс: 10:00 — 18:00</p>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-3">
-              <MapPin className="text-primary h-5 w-5" />
+            <div className="flex items-center justify-center gap-4">
+              <div className="bg-white p-3 rounded-full shadow-sm">
+                <MapPin className="text-primary h-5 w-5" />
+              </div>
               <div>
                 <p className="text-sm font-medium">Адрес</p>
                 <p className="text-sm text-muted-foreground">г. Барнаул, ул. Ленина, 88</p>
               </div>
             </div>
-            <div className="flex items-center justify-center md:justify-end gap-3">
-              <Phone className="text-primary h-5 w-5" />
+            <div className="flex items-center justify-center md:justify-end gap-4">
+              <div className="bg-white p-3 rounded-full shadow-sm">
+                <Phone className="text-primary h-5 w-5" />
+              </div>
               <div>
                 <p className="text-sm font-medium">Телефон</p>
                 <p className="text-sm text-muted-foreground">+7 (3852) 50-22-29</p>
@@ -73,8 +99,56 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Current exhibitions */}
+      {/* Features section */}
       <section className="py-20">
+        <div className="container">
+          <div className="text-center mb-16 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-serif font-bold mb-4">Добро пожаловать в ГХМАК</h2>
+            <p className="text-muted-foreground">
+              Исследуйте богатый мир искусства в одном из ведущих музеев Сибири.
+              Мы предлагаем уникальный опыт знакомства с искусством для всех посетителей.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="museum-card text-center">
+              <div className="mx-auto bg-accent w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                <Palette className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-medium mb-3">Уникальные экспозиции</h3>
+              <p className="text-muted-foreground">
+                Коллекция музея включает произведения русского и зарубежного искусства XVIII-XXI веков, 
+                а также уникальное собрание работ алтайских художников.
+              </p>
+            </div>
+            
+            <div className="museum-card text-center">
+              <div className="mx-auto bg-accent w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                <BookOpen className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-medium mb-3">Образовательные программы</h3>
+              <p className="text-muted-foreground">
+                Лекции, мастер-классы и интерактивные занятия для посетителей всех возрастов 
+                от ведущих специалистов музея и приглашенных экспертов.
+              </p>
+            </div>
+            
+            <div className="museum-card text-center">
+              <div className="mx-auto bg-accent w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                <Users className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-medium mb-3">Культурные события</h3>
+              <p className="text-muted-foreground">
+                Регулярные выставки, творческие встречи, концерты и другие мероприятия, 
+                делающие музей центром культурной жизни региона.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Current exhibitions */}
+      <section className="py-20 bg-muted/30">
         <div className="container">
           <div className="flex justify-between items-end mb-10">
             <h2 className="section-title">Актуальные выставки</h2>
@@ -109,14 +183,14 @@ const Index = () => {
       </section>
 
       {/* Museum info */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20">
         <div className="container">
           <MuseumInfo />
         </div>
       </section>
 
       {/* Upcoming events */}
-      <section className="py-20">
+      <section className="py-20 bg-museum-light">
         <div className="container">
           <div className="flex justify-between items-end mb-10">
             <h2 className="section-title">Афиша мероприятий</h2>
@@ -127,34 +201,105 @@ const Index = () => {
           </div>
           
           <Tabs defaultValue="all" className="mb-8">
-            <TabsList>
+            <TabsList className="bg-white">
               <TabsTrigger value="all">Все</TabsTrigger>
               <TabsTrigger value="lectures">Лекции</TabsTrigger>
               <TabsTrigger value="workshops">Мастер-классы</TabsTrigger>
               <TabsTrigger value="tours">Экскурсии</TabsTrigger>
             </TabsList>
+            
+            <TabsContent value="all" className="mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <EventCard 
+                  title="Мастер-класс по акварельной живописи: Алтайский пейзаж"
+                  date="12 июня 2023, 15:00"
+                  image="/placeholder.svg"
+                  type="Мастер-класс"
+                />
+                <EventCard 
+                  title="Лекция «История русской иконописи: от истоков до современности»"
+                  date="15 июня 2023, 18:00"
+                  image="/placeholder.svg"
+                  type="Лекция"
+                />
+                <EventCard 
+                  title="Экскурсия «Алтайское художественное наследие»"
+                  date="18 июня 2023, 12:00"
+                  image="/placeholder.svg"
+                  type="Экскурсия"
+                />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="lectures" className="mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <EventCard 
+                  title="Лекция «История русской иконописи: от истоков до современности»"
+                  date="15 июня 2023, 18:00"
+                  image="/placeholder.svg"
+                  type="Лекция"
+                />
+                <EventCard 
+                  title="Лекция «Импрессионизм в русской живописи»"
+                  date="22 июня 2023, 18:00"
+                  image="/placeholder.svg"
+                  type="Лекция"
+                />
+                <EventCard 
+                  title="Лекция «Художники Алтая: традиции и новаторство»"
+                  date="29 июня 2023, 18:00"
+                  image="/placeholder.svg"
+                  type="Лекция"
+                />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="workshops" className="mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <EventCard 
+                  title="Мастер-класс по акварельной живописи: Алтайский пейзаж"
+                  date="12 июня 2023, 15:00"
+                  image="/placeholder.svg"
+                  type="Мастер-класс"
+                />
+                <EventCard 
+                  title="Мастер-класс по графике для начинающих"
+                  date="19 июня 2023, 15:00"
+                  image="/placeholder.svg"
+                  type="Мастер-класс"
+                />
+                <EventCard 
+                  title="Мастер-класс «Пастельная живопись»"
+                  date="26 июня 2023, 15:00"
+                  image="/placeholder.svg"
+                  type="Мастер-класс"
+                />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="tours" className="mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <EventCard 
+                  title="Экскурсия «Алтайское художественное наследие»"
+                  date="18 июня 2023, 12:00"
+                  image="/placeholder.svg"
+                  type="Экскурсия"
+                />
+                <EventCard 
+                  title="Экскурсия «Шедевры русской живописи»"
+                  date="25 июня 2023, 12:00"
+                  image="/placeholder.svg"
+                  type="Экскурсия"
+                />
+                <EventCard 
+                  title="Обзорная экскурсия по музею"
+                  date="Каждую субботу, 14:00"
+                  image="/placeholder.svg"
+                  type="Экскурсия"
+                />
+              </div>
+            </TabsContent>
           </Tabs>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <EventCard 
-              title="Мастер-класс по акварельной живописи: Алтайский пейзаж"
-              date="12 июня 2023, 15:00"
-              image="/placeholder.svg"
-              type="Мастер-класс"
-            />
-            <EventCard 
-              title="Лекция «История русской иконописи: от истоков до современности»"
-              date="15 июня 2023, 18:00"
-              image="/placeholder.svg"
-              type="Лекция"
-            />
-            <EventCard 
-              title="Экскурсия «Алтайское художественное наследие»"
-              date="18 июня 2023, 12:00"
-              image="/placeholder.svg"
-              type="Экскурсия"
-            />
-          </div>
         </div>
       </section>
 

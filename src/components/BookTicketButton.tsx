@@ -1,152 +1,113 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Ticket, ChevronRight } from "lucide-react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "./ui/button";
+import { Ticket } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogTrigger } from "./ui/dialog";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
 export const BookTicketButton = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [step, setStep] = useState(1);
-  const [selectedTicket, setSelectedTicket] = useState("adult");
-  const [quantity, setQuantity] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [ticketType, setTicketType] = useState("adult");
+  const [ticketCount, setTicketCount] = useState("1");
   
-  const handleOpenDialog = () => {
-    setIsDialogOpen(true);
-    setStep(1);
+  const getPrice = () => {
+    const priceMap: Record<string, number> = {
+      adult: 300,
+      reduced: 150,
+      child: 0
+    };
+    
+    return priceMap[ticketType] * parseInt(ticketCount);
   };
-  
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-    // Сбрасываем состояние формы
-    setTimeout(() => {
-      setStep(1);
-      setSelectedTicket("adult");
-      setQuantity(1);
-    }, 300);
-  };
-  
-  const nextStep = () => {
-    setStep((prevStep) => prevStep + 1);
-  };
-  
-  const completeBooking = () => {
-    // Здесь будет логика завершения бронирования
-    handleCloseDialog();
-    // В реальном приложении можно добавить вызов API или другие действия
-  };
-  
+
   return (
-    <>
-      <Button onClick={handleOpenDialog} className="text-primary-foreground group scale-up-hover">
-        <Ticket className="mr-2 h-4 w-4 transition-transform group-hover:rotate-12" />
-        Купить билет
-      </Button>
-      
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Покупка билета</DialogTitle>
-            <DialogDescription>
-              {step === 1 && "Выберите тип билета и количество посетителей."}
-              {step === 2 && "Выберите дату и время посещения."}
-              {step === 3 && "Укажите ваши контактные данные."}
-            </DialogDescription>
-          </DialogHeader>
-          
-          {step === 1 && (
-            <div className="space-y-4 py-2">
-              <RadioGroup value={selectedTicket} onValueChange={setSelectedTicket}>
-                <div className="flex items-center space-x-2 mb-3">
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button size="lg" className="bg-primary hover:bg-primary/90 scale-up-hover">
+          <Ticket className="mr-2 h-4 w-4" />
+          Купить билет
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-serif">Билеты в музей</DialogTitle>
+          <DialogDescription>
+            Выберите тип и количество билетов для посещения музея.
+          </DialogDescription>
+        </DialogHeader>
+        
+        <div className="grid gap-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="ticket-type">Тип билета</Label>
+            <RadioGroup 
+              value={ticketType} 
+              onValueChange={setTicketType} 
+              className="flex flex-col space-y-2"
+            >
+              <div className="flex items-center justify-between space-x-2 rounded-md border p-3">
+                <div className="flex items-center space-x-2">
                   <RadioGroupItem value="adult" id="adult" />
-                  <Label htmlFor="adult" className="flex-1">Взрослый (300 ₽)</Label>
+                  <Label htmlFor="adult" className="cursor-pointer">Взрослый</Label>
                 </div>
-                <div className="flex items-center space-x-2 mb-3">
+                <div className="font-medium">300 ₽</div>
+              </div>
+              <div className="flex items-center justify-between space-x-2 rounded-md border p-3">
+                <div className="flex items-center space-x-2">
                   <RadioGroupItem value="reduced" id="reduced" />
-                  <Label htmlFor="reduced" className="flex-1">Льготный (150 ₽)</Label>
+                  <Label htmlFor="reduced" className="cursor-pointer">Льготный</Label>
                 </div>
+                <div className="font-medium">150 ₽</div>
+              </div>
+              <div className="flex items-center justify-between space-x-2 rounded-md border p-3">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="child" id="child" />
-                  <Label htmlFor="child" className="flex-1">Детский до 14 лет (бесплатно)</Label>
+                  <Label htmlFor="child" className="cursor-pointer">Детский (до 7 лет)</Label>
                 </div>
-              </RadioGroup>
-              
-              <div>
-                <Label htmlFor="quantity">Количество билетов</Label>
-                <Select 
-                  value={quantity.toString()} 
-                  onValueChange={(value) => setQuantity(parseInt(value))}
-                >
-                  <SelectTrigger id="quantity">
-                    <SelectValue placeholder="Выберите количество" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                      <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="font-medium">Бесплатно</div>
               </div>
-            </div>
-          )}
+            </RadioGroup>
+          </div>
           
-          {step === 2 && (
-            <div className="space-y-4 py-2">
-              <div>
-                <Label htmlFor="date">Дата посещения</Label>
-                <Input type="date" id="date" min={new Date().toISOString().split('T')[0]} />
-              </div>
-              
-              <div>
-                <Label htmlFor="time">Время посещения</Label>
-                <Select defaultValue="10:00">
-                  <SelectTrigger id="time">
-                    <SelectValue placeholder="Выберите время" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'].map((time) => (
-                      <SelectItem key={time} value={time}>{time}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="ticket-quantity">Количество</Label>
+              <Select value={ticketCount} onValueChange={setTicketCount}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {[...Array(10)].map((_, index) => (
+                    <SelectItem key={index + 1} value={(index + 1).toString()}>
+                      {index + 1}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-          )}
-          
-          {step === 3 && (
-            <div className="space-y-4 py-2">
-              <div>
-                <Label htmlFor="name">ФИО</Label>
-                <Input id="name" placeholder="Иванов Иван Иванович" />
-              </div>
-              
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="example@mail.ru" />
-              </div>
-              
-              <div>
-                <Label htmlFor="phone">Телефон</Label>
-                <Input id="phone" placeholder="+7 (___) ___-__-__" />
-              </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="visit-date">Дата посещения</Label>
+              <Input id="visit-date" type="date" />
             </div>
-          )}
-          
-          <DialogFooter>
-            {step < 3 ? (
-              <Button onClick={nextStep} className="w-full">
-                Далее <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
-            ) : (
-              <Button onClick={completeBooking} className="w-full">
-                Оплатить {selectedTicket === "adult" ? 300 * quantity : selectedTicket === "reduced" ? 150 * quantity : 0} ₽
-              </Button>
-            )}
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+          </div>
+        </div>
+        
+        <div className="flex justify-between items-center bg-muted/30 p-3 rounded-lg mb-4">
+          <span className="text-sm font-medium">Итого к оплате:</span>
+          <span className="text-lg font-bold">{getPrice()} ₽</span>
+        </div>
+        
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setIsOpen(false)}>
+            Отмена
+          </Button>
+          <Button onClick={() => setIsOpen(false)}>
+            Перейти к оплате
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
